@@ -14,7 +14,10 @@ def remove_bg():
     Returns a PNG image without background.
     """
     if 'image' not in request.files:
+        print("No image received")  # Debug log
         return {'error': 'No image provided'}, 400
+    else:
+        print(f"Received image: {request.files['image'].filename}")  # Debug log
 
     file = request.files['image']
     input_image = file.read()
@@ -38,9 +41,10 @@ def remove_bg():
         )
 
     except Exception as e:
+        print(f"Error removing background: {e}")  # Debug log
         return {'error': str(e)}, 500
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5050))  # Render will set PORT
-    app.run(host="0.0.0.0", port=port, debug=False, threaded=True)
-
+    port = int(os.environ.get("PORT", 5050))  # Render or other hosts may set PORT
+    print(f"Starting server on port {port}...")
+    app.run(host="0.0.0.0", port=port, debug=True, threaded=True)

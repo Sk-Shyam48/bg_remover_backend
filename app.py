@@ -2,6 +2,7 @@ from flask import Flask, request, send_file
 from rembg import remove
 from PIL import Image
 import io
+import os
 
 app = Flask(__name__)
 
@@ -30,5 +31,7 @@ def remove_bg():
         download_name='output.png'
     )
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5050)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5050))  # default to 5050 locally
+    app.run(host="0.0.0.0", port=port)
+
